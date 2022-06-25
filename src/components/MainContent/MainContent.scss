@@ -1,0 +1,131 @@
+.MainContent{
+    &__container{
+        position: relative;
+        width: 100%;
+        min-height: calc(100vh - 100px);
+        background-color: #1E1E24;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 100px;
+        
+        &__banner{
+            margin-bottom: 30px;
+            margin-top: 100px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 30px;
+        }
+
+        &__content{
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            min-height: 60vh;
+            width: 50vw;
+            background-color: transparent;
+
+            &__singleReferal{
+                position: relative;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-direction: column;
+
+                &:hover{
+                    opacity: 80%;
+                }
+
+                &__content{
+                    position: relative;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+
+                    &__image{
+                        width: 80px;
+                        height: 80px;
+                    }
+                    &__title{
+                        font-size: 20px;
+                        font-weight: 100;
+                    }
+                    &__code{
+                        font-size: 20px;
+                        font-weight: 500;
+                    }
+                    &__button{
+                        cursor: pointer;
+                        border-radius: 10%;
+                        border: 1px solid white;
+                    }
+                }
+
+                &__separator{
+                    position: relative;
+                    height: 1px;
+                    opacity: 80%;
+                    width: 80%;
+                    background-color: white;
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+            }
+        }
+
+    }
+}
+
+.Filter{
+    &__container{
+    width: 40vw;
+    height: 50px;
+    // background-color: white;
+    margin-bottom: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    &__searchBox{
+        position: relative;
+        width: 70%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-left: 10px;
+        &__icon{
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+        &__input{
+            border-left: none;
+            margin-left: 10px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            font-family: 'Kdam Thmor Pro', sans-serif;
+            background-color: transparent;
+            letter-spacing: 5px;
+            text-align: center;
+            position: relative;
+            width: 80%;
+            color: white;
+            transition: all 0.3s ease-in-out;
+            &:focus{
+                outline: none !important;
+            }
+        }
+        &__hidden{
+            display: none;
+        }
+    }
+}
+}
