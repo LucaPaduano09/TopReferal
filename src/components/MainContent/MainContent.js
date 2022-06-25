@@ -1,6 +1,6 @@
 import { useState, useEffect, React } from "react";
 import "./MainContent.scss";
-import Fade from "react-reveal";
+import Fade from "react-reveal/Fade";
 const MainContent = () => {
   const [fullReferal, setFullReferal] = useState([]);
   const [referals, setReferals] = useState([]);
