@@ -1,6 +1,8 @@
 import { useState, useEffect, React } from "react";
 import "./MainContent.scss";
+import Fade from "react-reveal";
 const MainContent = () => {
+  const [fullReferal, setFullReferal] = useState([]);
   const [referals, setReferals] = useState([]);
   const [none, setNone] = useState(false);
   const [inputClass, SetinputClass] = useState(
@@ -18,15 +20,22 @@ const MainContent = () => {
     }
   };
 
-  const handleSearch = (referals, name) => {
-    let filtered = null;
-    filtered = referals.filter((referal) => referal.name.indexOf(name) !== -1);
-    if (filtered.length > 0) {
-      setReferals(filtered);
-      setNone(false)
+  const handleSearch = async (referals, name) => {
+    if (name !== "") {
+      let filtered = [];
+      filtered = referals.filter(
+        (referal) => referal.name.indexOf(name) !== -1
+      );
+      if (filtered.length > 0) {
+        console.log(referals);
+        setReferals(filtered);
+        console.log(referals);
+        setNone(false);
+      } else {
+        setNone(true);
+      }
     } else {
-      setNone(true);
-      setReferals([{name:"",code:"",image:""}]);
+      setReferals(fullReferal);
     }
   };
 
@@ -47,9 +56,10 @@ const MainContent = () => {
 
       let result = await response.json();
       setReferals(result);
+      setFullReferal(result);
     };
     getReferals();
-  });
+  }, []);
 
   return (
     <div className="MainContent__container">
@@ -58,16 +68,28 @@ const MainContent = () => {
         <div className="Filter__container__searchBox">
           <img
             className="Filter__container__searchBox__icon"
-            src="./images/search-icon.png"
+            src="./images/white-search.png"
             alt="search-icon"
             onClick={() => setInputClass()}
           />
-          <input
-            className={inputClass}
-            type={"text"}
-            placeholder="search"
-            onChange={(e) => handleSearch(referals, e.target.value)}
-          />
+          <Fade>
+            <input
+              className={inputClass}
+              type={"text"}
+              placeholder="search"
+              onChange={(e) => handleSearch(referals, e.target.value)}
+            />
+          </Fade>
+        </div>
+        <div className="Filter__container__filterBox">
+          <div className="Filter__container__filterBox__container">
+            <a className="Filter__container__filterBox__container__link">
+              Filter
+            </a>
+            <div className="Filter__container__filterBox__container__content">
+              Content
+            </div>
+          </div>
         </div>
       </div>
       <div className="MainContent__container__content">
@@ -75,7 +97,7 @@ const MainContent = () => {
           referals.map((r, index) => (
             <div className="MainContent__container__content__singleReferal">
               <div className="MainContent__container__content__singleReferal__content">
-                {index + 1 + " ."}
+                {<p style={{ marginRight: "20px" }}>{index + 1 + " ."}</p>}
                 <img
                   className="MainContent__container__content__singleReferal__content__image"
                   src={r.image}
@@ -94,17 +116,16 @@ const MainContent = () => {
               <div className="MainContent__container__content__singleReferal__separator"></div>
             </div>
           ))}
-          {
-            none && 
-            <div className="MainContent__container__content__singleReferal">
-              <div className="MainContent__container__content__singleReferal__content">
-                <p className="MainContent__container__content__singleReferal__content__title">
-                  no referals found for searched name
-                </p>
-              </div>
-              <div className="MainContent__container__content__singleReferal__separator"></div>
+        {none && (
+          <div className="MainContent__container__content__singleReferal">
+            <div className="MainContent__container__content__singleReferal__content">
+              <p className="MainContent__container__content__singleReferal__content__title">
+                no referals found for searched name
+              </p>
             </div>
-          }
+            <div className="MainContent__container__content__singleReferal__separator"></div>
+          </div>
+        )}
       </div>
     </div>
   );
