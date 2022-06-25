@@ -55,6 +55,7 @@
             flex: 1;
             font-size: 20px;
             font-weight: 100;
+            text-transform: capitalize;
           }
           &__code {
             flex: 2;
@@ -137,25 +138,54 @@
       width: 30%;
 
       &__container {
-        position: relative;
+        position: absolute;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         &__link {
-          position: relative;
-          width: 100%;
-          cursor: pointer;
-          &:after {
-            content: "˄";
-            margin-left: 20px;
+          &__hidden {
+            position: relative;
+            width: 100%;
+            cursor: pointer;
+            &:after {
+              content: "˄";
+              margin-left: 20px;
+            }
+          }
+          &__visible {
+            position: relative;
+            width: 100%;
+            cursor: pointer;
+            &:after {
+              content: "˅";
+              margin-left: 20px;
+            }
           }
         }
 
         &__content {
           position: relative;
-          width: 100%;
-          display: none;
+          z-index: 10000;
+          width: 40vw;
+          height: 200px;
+          align-self: flex-end;
+          background-color: rgba($color: #119999, $alpha: 1.0);
+          color: black;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          border-radius: 10px;
+
+          &__close {
+            position: absolute;
+            top: 0;
+            left: 2px;
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+          }
         }
       }
     }

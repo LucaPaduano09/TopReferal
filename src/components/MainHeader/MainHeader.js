@@ -8,13 +8,13 @@ const MainHeader = () => {
       </div>
       <div className="MainHeader__container__menu">
         <a href="" className="MainHeader__container__menu__link">
-          Music
+          Home
         </a>
         <a href="" className="MainHeader__container__menu__link">
-          Shows
+          Platforms
         </a>
         <a href="" className="MainHeader__container__menu__link">
-          Sports
+          Games
         </a>
         <a href="" className="MainHeader__container__menu__link">
           Crypto

@@ -2,6 +2,7 @@ import { useState, useEffect, React } from "react";
 import "./MainContent.scss";
 import Fade from "react-reveal/Fade";
 const MainContent = () => {
+  const [loading, setLoading] = useState(true);
   const [fullReferal, setFullReferal] = useState([]);
   const [referals, setReferals] = useState([]);
   const [none, setNone] = useState(false);
@@ -9,6 +10,8 @@ const MainContent = () => {
     "Filter__container__searchBox__hidden"
   );
   const [toggle, setToggle] = useState(false);
+  const [filterToggle, setFilterToggle] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const setInputClass = () => {
     if (toggle) {
@@ -22,9 +25,11 @@ const MainContent = () => {
 
   const handleSearch = async (referals, name) => {
     if (name !== "") {
+      let lowercaseName = name.toLowerCase();
+      console.log(lowercaseName);
       let filtered = [];
       filtered = referals.filter(
-        (referal) => referal.name.indexOf(name) !== -1
+        (referal) => referal.name.indexOf(lowercaseName) !== -1
       );
       if (filtered.length > 0) {
         console.log(referals);
@@ -38,6 +43,27 @@ const MainContent = () => {
       setReferals(fullReferal);
     }
   };
+
+  const hanldeShowFilters = () => {
+    setShowFilter(true);
+    setFilterToggle(true);
+  };
+  const handleFilterClose = () => {
+    setFilterToggle(false);
+    setShowFilter(false);
+  };
+  const handleMovieClick = (referals) => {
+    let filtered = [];
+    filtered = referals.filter((referal) => 
+      referal.category.indexOf("movie") !== -1
+    );
+    setReferals(filtered);
+    setShowFilter(false);
+  };
+  const handleAllClick = () => {
+    setReferals(fullReferal);
+    setShowFilter(false)
+  }
 
   useEffect(() => {
     const getReferals = async () => {
@@ -56,6 +82,7 @@ const MainContent = () => {
 
       let result = await response.json();
       setReferals(result);
+      setLoading(false);
       setFullReferal(result);
     };
     getReferals();
@@ -63,7 +90,7 @@ const MainContent = () => {
 
   return (
     <div className="MainContent__container">
-      <h1 className="MainContent__container__banner">Top 100 Used Referal</h1>
+      <h1 className="MainContent__container__banner">Top 100 Used Referral</h1>
       <div className="Filter__container">
         <div className="Filter__container__searchBox">
           <img
@@ -83,17 +110,64 @@ const MainContent = () => {
         </div>
         <div className="Filter__container__filterBox">
           <div className="Filter__container__filterBox__container">
-            <a className="Filter__container__filterBox__container__link">
-              Filter
-            </a>
-            <div className="Filter__container__filterBox__container__content">
-              Content
-            </div>
+            {!filterToggle && (
+              <a
+                className="Filter__container__filterBox__container__link__hidden"
+                onClick={() => hanldeShowFilters()}
+              >
+                Filter
+              </a>
+            )}
+            {filterToggle && (
+              <a
+                className="Filter__container__filterBox__container__link__visible"
+                onClick={() => hanldeShowFilters()}
+              >
+                Filter
+              </a>
+            )}
+            {showFilter && (
+              <Fade>
+                <div className="Filter__container__filterBox__container__content">
+                  <img
+                    className="Filter__container__filterBox__container__content__close"
+                    src="./images/close-icon.png"
+                    alt="close-icon"
+                    onClick={() => handleFilterClose()}
+                  />
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a onClick={() => handleAllClick()}>All</a>
+                  </div>
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a onClick={() => handleMovieClick(referals)}>Movie</a>
+                  </div>
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a>Sport</a>
+                  </div>
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a>Music</a>
+                  </div>
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a>Crypto</a>
+                  </div>
+                  <div className="Filter__container__filterBox__container__content__category">
+                    <a>Games</a>
+                  </div>
+                </div>
+              </Fade>
+            )}
           </div>
         </div>
       </div>
       <div className="MainContent__container__content">
+        {loading && (
+          <div>
+            <p>We're loading referals for you</p>
+            <p>Thank's for your patience</p>
+          </div>
+        )}
         {!none &&
+          !loading &&
           referals.map((r, index) => (
             <div className="MainContent__container__content__singleReferal">
               <div className="MainContent__container__content__singleReferal__content">
@@ -110,7 +184,9 @@ const MainContent = () => {
                   {r.code}
                 </p>
                 <button className="MainContent__container__content__singleReferal__content__button">
-                  Copy
+                  <a target="blank" href={r.link}>
+                    Go!
+                  </a>
                 </button>
               </div>
               <div className="MainContent__container__content__singleReferal__separator"></div>
