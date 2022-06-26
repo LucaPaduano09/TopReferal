@@ -40,6 +40,7 @@ const MainContent = () => {
         setNone(true);
       }
     } else {
+      setNone(false);
       setReferals(fullReferal);
     }
   };
@@ -54,16 +55,24 @@ const MainContent = () => {
   };
   const handleMovieClick = (referals) => {
     let filtered = [];
-    filtered = referals.filter((referal) => 
-      referal.category.indexOf("movie") !== -1
+    filtered = fullReferal.filter(
+      (referal) => referal.category.indexOf("movie") !== -1
     );
     setReferals(filtered);
     setShowFilter(false);
   };
   const handleAllClick = () => {
     setReferals(fullReferal);
-    setShowFilter(false)
-  }
+    setShowFilter(false);
+  };
+  const handleCryptoClick = () => {
+    let filtered = [];
+    filtered = fullReferal.filter(
+      (referal) => referal.category.indexOf("crypto") !== -1
+    );
+    setReferals(filtered);
+    setShowFilter(false);
+  };
 
   useEffect(() => {
     const getReferals = async () => {
@@ -105,6 +114,7 @@ const MainContent = () => {
               type={"text"}
               placeholder="search"
               onChange={(e) => handleSearch(referals, e.target.value)}
+              onReset={()=> setReferals(fullReferal)}
             />
           </Fade>
         </div>
@@ -148,7 +158,7 @@ const MainContent = () => {
                     <a>Music</a>
                   </div>
                   <div className="Filter__container__filterBox__container__content__category">
-                    <a>Crypto</a>
+                    <a onClick={() => handleCryptoClick()}>Crypto</a>
                   </div>
                   <div className="Filter__container__filterBox__container__content__category">
                     <a>Games</a>
@@ -180,9 +190,25 @@ const MainContent = () => {
                 <p className="MainContent__container__content__singleReferal__content__title">
                   {r.name}
                 </p>
-                <p className="MainContent__container__content__singleReferal__content__code">
+                <p 
+                title={r.desc}
+                className="MainContent__container__content__singleReferal__content__code"
+                >
+                  <p>
                   {r.code}
+                  </p>
                 </p>
+
+                {r.availability === "available" && (
+                  <p className="MainContent__container__content__singleReferal__content__available">
+                    {r.availability}
+                  </p>
+                )}
+                {r.availability === "expired" && (
+                  <p className="MainContent__container__content__singleReferal__content__expired">
+                    {r.availability}
+                  </p>
+                )}
                 <button className="MainContent__container__content__singleReferal__content__button">
                   <a target="blank" href={r.link}>
                     Go!

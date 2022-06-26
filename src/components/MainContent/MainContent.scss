@@ -24,12 +24,12 @@
       justify-content: flex-start;
       flex-direction: column;
       min-height: 60vh;
-      width: 50vw;
+      width: 60vw;
       background-color: transparent;
 
       &__singleReferal {
         position: relative;
-        width: 80%;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
@@ -56,11 +56,41 @@
             font-size: 20px;
             font-weight: 100;
             text-transform: capitalize;
+            cursor:default;
           }
           &__code {
-            flex: 2;
+            flex: 1;
             font-size: 20px;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            p{
+              position: relative;
+              width: 37%;
+              cursor: crosshair;
+            }
+          }
+          &__desc {
+            flex: 2;
+            font-size: 15px;
+            font-weight: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+          }
+          &__available{
+            flex: 1;
+            text-transform: capitalize;
+            color: green;
+            cursor:default;
+          }
+          &__expired{
+            flex: 1;
+            color: red;
+            text-decoration: line-through;
+            text-transform: capitalize;
           }
           &__button {
             cursor: pointer;
@@ -85,13 +115,12 @@
 
 .Filter {
   &__container {
-    width: 40vw;
+    width: 60vw;
     height: 50px;
     // background-color: white;
     margin-bottom: 80px;
     border-radius: 20px;
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     &__searchBox {
       position: relative;
@@ -110,6 +139,7 @@
         }
       }
       &__input {
+        height: 30px;
         margin-left: 10px;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -122,8 +152,7 @@
         position: relative;
         width: 80%;
         color: white;
-        border-color: white;
-        border-style: solid;
+        border: 1px solid white;
         transition: all 0.3s ease-in-out;
         &:focus {
           outline: none !important;
@@ -144,6 +173,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        text-align: right;
         &__link {
           &__hidden {
             position: relative;
@@ -167,9 +197,9 @@
 
         &__content {
           position: relative;
-          z-index: 10000;
-          width: 40vw;
+          width: 60vw;
           height: 200px;
+          margin-top: 20px;
           align-self: flex-end;
           background-color: rgba($color: #119999, $alpha: 1.0);
           color: black;
@@ -177,14 +207,20 @@
           align-items: center;
           justify-content: space-evenly;
           border-radius: 10px;
+          box-shadow: 2px 4px 6px 8px rgba($color: black, $alpha: 0.2);
+          z-index: 100000;
 
           &__close {
             position: absolute;
             top: 0;
-            left: 2px;
+            right: 2px;
             height: 30px;
             width: 30px;
             cursor: pointer;
+          }
+          &__category{
+            cursor: pointer;
+            letter-spacing: 2px;
           }
         }
       }
